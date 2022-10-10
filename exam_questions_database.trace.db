@@ -1,0 +1,115 @@
+2022-10-10 23:39:26 jdbc[3]: exception
+java.sql.SQLClientInfoException: Client info name 'ApplicationName' not supported.
+	at org.h2.jdbc.JdbcConnection.setClientInfo(JdbcConnection.java:1573)
+	at org.jkiss.dbeaver.ext.generic.model.GenericDataSource.populateClientAppName(GenericDataSource.java:177)
+	at org.jkiss.dbeaver.ext.generic.model.GenericDataSource.openConnection(GenericDataSource.java:140)
+	at org.jkiss.dbeaver.ext.h2.model.H2DataSource.openConnection(H2DataSource.java:74)
+	at org.jkiss.dbeaver.model.impl.jdbc.JDBCExecutionContext.connect(JDBCExecutionContext.java:103)
+	at org.jkiss.dbeaver.model.impl.jdbc.JDBCRemoteInstance.initializeMainContext(JDBCRemoteInstance.java:100)
+	at org.jkiss.dbeaver.model.impl.jdbc.JDBCRemoteInstance.<init>(JDBCRemoteInstance.java:59)
+	at org.jkiss.dbeaver.model.impl.jdbc.JDBCDataSource.initializeRemoteInstance(JDBCDataSource.java:113)
+	at org.jkiss.dbeaver.ext.generic.model.GenericDataSource.<init>(GenericDataSource.java:109)
+	at org.jkiss.dbeaver.ext.h2.model.H2DataSource.<init>(H2DataSource.java:43)
+	at org.jkiss.dbeaver.ext.h2.model.H2MetaModel.createDataSourceImpl(H2MetaModel.java:55)
+	at org.jkiss.dbeaver.ext.generic.GenericDataSourceProvider.openDataSource(GenericDataSourceProvider.java:106)
+	at org.jkiss.dbeaver.registry.DataSourceDescriptor.openDataSource(DataSourceDescriptor.java:983)
+	at org.jkiss.dbeaver.registry.DataSourceDescriptor.connect(DataSourceDescriptor.java:920)
+	at org.jkiss.dbeaver.runtime.jobs.ConnectJob.run(ConnectJob.java:70)
+	at org.jkiss.dbeaver.runtime.jobs.ConnectJob.runSync(ConnectJob.java:98)
+	at org.jkiss.dbeaver.ui.actions.datasource.DataSourceHandler.connectToDataSource(DataSourceHandler.java:113)
+	at org.jkiss.dbeaver.ui.actions.datasource.UIServiceConnectionsImpl.initConnection(UIServiceConnectionsImpl.java:70)
+	at org.jkiss.dbeaver.model.navigator.DBNDataSource.initializeNode(DBNDataSource.java:158)
+	at org.jkiss.dbeaver.model.navigator.DBNDatabaseNode.getChildren(DBNDatabaseNode.java:225)
+	at org.jkiss.dbeaver.model.navigator.DBNDatabaseNode.getChildren(DBNDatabaseNode.java:1)
+	at org.jkiss.dbeaver.model.navigator.DBNUtils.getNodeChildrenFiltered(DBNUtils.java:80)
+	at org.jkiss.dbeaver.ui.navigator.database.load.TreeLoadService.evaluate(TreeLoadService.java:49)
+	at org.jkiss.dbeaver.ui.navigator.database.load.TreeLoadService.evaluate(TreeLoadService.java:1)
+	at org.jkiss.dbeaver.ui.LoadingJob.run(LoadingJob.java:88)
+	at org.jkiss.dbeaver.ui.LoadingJob.run(LoadingJob.java:72)
+	at org.jkiss.dbeaver.model.runtime.AbstractJob.run(AbstractJob.java:105)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+2022-10-10 23:39:42 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "QUESTION_TEXT CHARACTER VARYING(1024)": "U&'<p><span style=""font-size:11pt""><span style=""font-family:Calibri,sans-serif"">... (1113)"; SQL statement:
+INSERT INTO PUBLIC.UZMANOGRETMENLIK (TITLE,TEST_NO,QUESTION_NO,QUESTION_TEXT,ANSWER_0,ANSWER_1,ANSWER_2,ANSWER_3,ANSWER_4,CORRECT_ANSWER)
+	VALUES (?,?,?,?,?,?,?,?,?,?) [22001-210]
+2022-10-10 23:39:42 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "QUESTION_TEXT CHARACTER VARYING(1024)": "U&'<p>Bir ilkokulda \\00f6\\011frenciler iki gruba ayr\\0131l\\0131yor. Bir gruba \\0... (1069)"; SQL statement:
+INSERT INTO PUBLIC.UZMANOGRETMENLIK (TITLE,TEST_NO,QUESTION_NO,QUESTION_TEXT,ANSWER_0,ANSWER_1,ANSWER_2,ANSWER_3,ANSWER_4,CORRECT_ANSWER)
+	VALUES (?,?,?,?,?,?,?,?,?,?) [22001-210]
+2022-10-10 23:39:42 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "QUESTION_TEXT CHARACTER VARYING(1024)": "U&'<p>6. s\\0131n\\0131f \\00f6\\011frencisi olan Sel\\00e7uk fiziksel engelinden dol... (1033)"; SQL statement:
+INSERT INTO PUBLIC.UZMANOGRETMENLIK (TITLE,TEST_NO,QUESTION_NO,QUESTION_TEXT,ANSWER_0,ANSWER_1,ANSWER_2,ANSWER_3,ANSWER_4,CORRECT_ANSWER)
+	VALUES (?,?,?,?,?,?,?,?,?,?) [22001-210]
+2022-10-10 23:39:42 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "ANSWER_1 CHARACTER VARYING(256)": "U&'Kapsay\\0131c\\0131 e\\011fitime y\\00f6nelik e\\011fiticilerin mesleki geli\\015fi... (303)"; SQL statement:
+INSERT INTO PUBLIC.UZMANOGRETMENLIK (TITLE,TEST_NO,QUESTION_NO,QUESTION_TEXT,ANSWER_0,ANSWER_1,ANSWER_2,ANSWER_3,ANSWER_4,CORRECT_ANSWER)
+	VALUES (?,?,?,?,?,?,?,?,?,?) [22001-210]
+2022-10-10 23:39:42 jdbc[3]: exception
+org.h2.jdbc.JdbcBatchUpdateException: Value too long for column "QUESTION_TEXT CHARACTER VARYING(1024)": "U&'<p><span style=""font-size:11pt""><span style=""font-family:Calibri,sans-serif"">... (1113)"; SQL statement:
+INSERT INTO PUBLIC.UZMANOGRETMENLIK (TITLE,TEST_NO,QUESTION_NO,QUESTION_TEXT,ANSWER_0,ANSWER_1,ANSWER_2,ANSWER_3,ANSWER_4,CORRECT_ANSWER)
+	VALUES (?,?,?,?,?,?,?,?,?,?) [22001-210]
+	at org.h2.jdbc.JdbcPreparedStatement.executeBatch(JdbcPreparedStatement.java:1269)
+	at org.jkiss.dbeaver.model.impl.jdbc.exec.JDBCStatementImpl.executeBatch(JDBCStatementImpl.java:374)
+	at org.jkiss.dbeaver.utils.SecurityManagerUtils.wrapDriverActions(SecurityManagerUtils.java:94)
+	at org.jkiss.dbeaver.model.impl.jdbc.exec.JDBCStatementImpl.executeStatementBatch(JDBCStatementImpl.java:152)
+	at org.jkiss.dbeaver.model.impl.data.ExecuteBatchImpl.flushBatch(ExecuteBatchImpl.java:290)
+	at org.jkiss.dbeaver.model.impl.data.ExecuteBatchImpl.processBatch(ExecuteBatchImpl.java:212)
+	at org.jkiss.dbeaver.model.impl.data.ExecuteBatchImpl.execute(ExecuteBatchImpl.java:81)
+	at org.jkiss.dbeaver.tools.transfer.database.DatabaseTransferConsumer.lambda$0(DatabaseTransferConsumer.java:416)
+	at org.jkiss.dbeaver.model.exec.DBExecUtils.tryExecuteRecover(DBExecUtils.java:171)
+	at org.jkiss.dbeaver.tools.transfer.database.DatabaseTransferConsumer.insertBatch(DatabaseTransferConsumer.java:414)
+	at org.jkiss.dbeaver.tools.transfer.database.DatabaseTransferConsumer.fetchEnd(DatabaseTransferConsumer.java:470)
+	at org.jkiss.dbeaver.tools.transfer.stream.importer.DataImporterCSV.runImport(DataImporterCSV.java:285)
+	at org.jkiss.dbeaver.tools.transfer.stream.StreamTransferProducer.transferData(StreamTransferProducer.java:143)
+	at org.jkiss.dbeaver.tools.transfer.stream.StreamTransferProducer.transferData(StreamTransferProducer.java:1)
+	at org.jkiss.dbeaver.tools.transfer.DataTransferJob.transferData(DataTransferJob.java:114)
+	at org.jkiss.dbeaver.tools.transfer.DataTransferJob.run(DataTransferJob.java:86)
+	at org.jkiss.dbeaver.runtime.RunnableContextDelegate.lambda$0(RunnableContextDelegate.java:39)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:122)
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "QUESTION_TEXT CHARACTER VARYING(1024)": "U&'<p><span style=""font-size:11pt""><span style=""font-family:Calibri,sans-serif"">... (1113)"; SQL statement:
+INSERT INTO PUBLIC.UZMANOGRETMENLIK (TITLE,TEST_NO,QUESTION_NO,QUESTION_TEXT,ANSWER_0,ANSWER_1,ANSWER_2,ANSWER_3,ANSWER_4,CORRECT_ANSWER)
+	VALUES (?,?,?,?,?,?,?,?,?,?) [22001-210]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:525)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:496)
+	at org.h2.message.DbException.get(DbException.java:227)
+	at org.h2.message.DbException.getValueTooLongException(DbException.java:341)
+	at org.h2.value.Value.getValueTooLongException(Value.java:2572)
+	at org.h2.value.Value.convertToVarchar(Value.java:1261)
+	at org.h2.value.Value.convertTo(Value.java:1117)
+	at org.h2.value.Value.convertForAssignTo(Value.java:1092)
+	at org.h2.table.Column.validateConvertUpdateSequence(Column.java:369)
+	at org.h2.table.Table.convertInsertRow(Table.java:931)
+	at org.h2.command.dml.Insert.insertRows(Insert.java:167)
+	at org.h2.command.dml.Insert.update(Insert.java:135)
+	at org.h2.command.dml.DataChangeStatement.update(DataChangeStatement.java:61)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:174)
+	at org.h2.command.Command.executeUpdate(Command.java:252)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdateInternal(JdbcPreparedStatement.java:209)
+	at org.h2.jdbc.JdbcPreparedStatement.executeBatchElement(JdbcPreparedStatement.java:1317)
+	at org.h2.jdbc.JdbcPreparedStatement.executeBatch(JdbcPreparedStatement.java:1263)
+	at org.jkiss.dbeaver.model.impl.jdbc.exec.JDBCStatementImpl.executeBatch(JDBCStatementImpl.java:374)
+	at org.jkiss.dbeaver.utils.SecurityManagerUtils.wrapDriverActions(SecurityManagerUtils.java:94)
+	at org.jkiss.dbeaver.model.impl.jdbc.exec.JDBCStatementImpl.executeStatementBatch(JDBCStatementImpl.java:152)
+	at org.jkiss.dbeaver.model.impl.data.ExecuteBatchImpl.flushBatch(ExecuteBatchImpl.java:290)
+	at org.jkiss.dbeaver.model.impl.data.ExecuteBatchImpl.processBatch(ExecuteBatchImpl.java:212)
+	at org.jkiss.dbeaver.model.impl.data.ExecuteBatchImpl.execute(ExecuteBatchImpl.java:81)
+	at org.jkiss.dbeaver.tools.transfer.database.DatabaseTransferConsumer.lambda$0(DatabaseTransferConsumer.java:416)
+	at org.jkiss.dbeaver.model.exec.DBExecUtils.tryExecuteRecover(DBExecUtils.java:171)
+	at org.jkiss.dbeaver.tools.transfer.database.DatabaseTransferConsumer.insertBatch(DatabaseTransferConsumer.java:414)
+	at org.jkiss.dbeaver.tools.transfer.database.DatabaseTransferConsumer.fetchEnd(DatabaseTransferConsumer.java:470)
+	at org.jkiss.dbeaver.tools.transfer.stream.importer.DataImporterCSV.runImport(DataImporterCSV.java:285)
+	at org.jkiss.dbeaver.tools.transfer.stream.StreamTransferProducer.transferData(StreamTransferProducer.java:143)
+	at org.jkiss.dbeaver.tools.transfer.stream.StreamTransferProducer.transferData(StreamTransferProducer.java:1)
+	at org.jkiss.dbeaver.tools.transfer.DataTransferJob.transferData(DataTransferJob.java:114)
+	at org.jkiss.dbeaver.tools.transfer.DataTransferJob.run(DataTransferJob.java:86)
+	at org.jkiss.dbeaver.runtime.RunnableContextDelegate.lambda$0(RunnableContextDelegate.java:39)
+	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:122)
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "QUESTION_TEXT CHARACTER VARYING(1024)": "U&'<p>Bir ilkokulda \\00f6\\011frenciler iki gruba ayr\\0131l\\0131yor. Bir gruba \\0... (1069)"; SQL statement:
+INSERT INTO PUBLIC.UZMANOGRETMENLIK (TITLE,TEST_NO,QUESTION_NO,QUESTION_TEXT,ANSWER_0,ANSWER_1,ANSWER_2,ANSWER_3,ANSWER_4,CORRECT_ANSWER)
+	VALUES (?,?,?,?,?,?,?,?,?,?) [22001-210]
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "QUESTION_TEXT CHARACTER VARYING(1024)": "U&'<p>6. s\\0131n\\0131f \\00f6\\011frencisi olan Sel\\00e7uk fiziksel engelinden dol... (1033)"; SQL statement:
+INSERT INTO PUBLIC.UZMANOGRETMENLIK (TITLE,TEST_NO,QUESTION_NO,QUESTION_TEXT,ANSWER_0,ANSWER_1,ANSWER_2,ANSWER_3,ANSWER_4,CORRECT_ANSWER)
+	VALUES (?,?,?,?,?,?,?,?,?,?) [22001-210]
+org.h2.jdbc.JdbcSQLDataException: Value too long for column "ANSWER_1 CHARACTER VARYING(256)": "U&'Kapsay\\0131c\\0131 e\\011fitime y\\00f6nelik e\\011fiticilerin mesleki geli\\015fi... (303)"; SQL statement:
+INSERT INTO PUBLIC.UZMANOGRETMENLIK (TITLE,TEST_NO,QUESTION_NO,QUESTION_TEXT,ANSWER_0,ANSWER_1,ANSWER_2,ANSWER_3,ANSWER_4,CORRECT_ANSWER)
+	VALUES (?,?,?,?,?,?,?,?,?,?) [22001-210]
