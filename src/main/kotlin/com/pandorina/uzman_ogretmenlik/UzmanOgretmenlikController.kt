@@ -2,16 +2,18 @@ package com.pandorina.uzman_ogretmenlik
 
 import com.google.gson.Gson
 import com.pandorina.model.*
-import com.pandorina.model.QuestionSourceModel
-import java.io.File
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 object UzmanOgretmenlikController {
 
-    private val questionList =
-        File("files/uzman-ogretmenlik/uzman-ogretmenlik-sorular.json").readText().run {
-            Gson().fromJson(this, Array<QuestionSourceModel>::class.java).asList()
-        }
-    private val trialExamList = File("files/uzman-ogretmenlik/uzman-ogretmenlik-deneme-sinavlari.json").readText().run {
+    private val questionList = BufferedReader(
+        InputStreamReader(javaClass.getResourceAsStream("/uzman-ogretmenlik-sorular.json"))).readText().run {
+        Gson().fromJson(this, Array<QuestionSourceModel>::class.java).asList()
+    }
+
+    private val trialExamList = BufferedReader(
+        InputStreamReader(javaClass.getResourceAsStream("/uzman-ogretmenlik-deneme-sinavlari.json"))).readText().run {
         Gson().fromJson(this, Array<QuestionSourceModel>::class.java).asList()
     }
 
