@@ -12,7 +12,6 @@ import io.ktor.client.statement.*
 import kotlin.test.*
 import io.ktor.server.testing.*
 import com.pandorina.plugins.*
-import com.pandorina.uzman_ogretmenlik.UzmanOgretmenlikTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 

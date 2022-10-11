@@ -1,61 +1,78 @@
 package com.pandorina.uzman_ogretmenlik
 
+import com.google.gson.Gson
 import com.pandorina.model.*
-import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.transactions.transaction
+import com.pandorina.model.QuestionSourceModel
+import java.io.File
 
 object UzmanOgretmenlikController {
 
-    fun getTitles(): TitlesResponse {
-        return transaction {
-            val results = UzmanOgretmenlikTable
-                .selectAll()
-                .map {
-                    it[UzmanOgretmenlikTable.title]
-                }.distinct()
-            TitlesResponse(results.size, results)
+    private val questionList =
+        File("files/uzman-ogretmenlik/uzman-ogretmenlik-sorular.json").readText().run {
+            Gson().fromJson(this, Array<QuestionSourceModel>::class.java).asList()
         }
+    private val trialExamList = File("files/uzman-ogretmenlik/uzman-ogretmenlik-deneme-sinavlari.json").readText().run {
+        Gson().fromJson(this, Array<QuestionSourceModel>::class.java).asList()
+    }
+
+    private fun mixedList(): List<QuestionSourceModel> {
+        return mutableListOf<QuestionSourceModel>().apply {
+            addAll(questionList)
+            addAll(trialExamList)
+            shuffled()
+        }
+    }
+
+    fun getTitles(): TitlesResponse {
+        val titles = questionList
+            .map {
+                it.title
+            }.distinct()
+        return TitlesResponse(titles.size, titles)
     }
 
     fun getTests(title: String): TestsResponse {
-        return transaction {
-            val query = UzmanOgretmenlikTable
-                .select {
-                    UzmanOgretmenlikTable.title eq title
-                }
-            val results = query.map {
-                it.toTestResponse()
-            }.distinct()
-            TestsResponse(size = results.size, results)
-        }
+        val questions = questionList.filter {
+            it.title == title
+        }.map {
+            it.toTestResponse()
+        }.distinct()
+        return TestsResponse(size = questions.size, questions)
     }
 
     fun getQuestions(title: String, testNo: Int): QuestionsResponse {
-        return transaction {
-            val query = UzmanOgretmenlikTable
-                .select {
-                    (UzmanOgretmenlikTable.testNo eq testNo) and (UzmanOgretmenlikTable.title eq title)
-                }
-            val questions = query.map {
-                it.toQuestion()
-            }
-            QuestionsResponse(size = questions.size, questions)
+        val questions = questionList.filter {
+            it.title == title && it.test_no == testNo
+        }.map {
+            it.toQuestion()
         }
+        return QuestionsResponse(size = questions.size, questions)
+    }
+
+    fun getTrialExamTests(): TestsResponse {
+        val tests = trialExamList.map {
+            it.toTestResponse()
+        }.distinct()
+        return TestsResponse(size = tests.size, tests)
+    }
+
+    fun getTrialExamQuestions(testNo: Int): QuestionsResponse {
+        val questions = trialExamList.filter {
+            it.test_no == testNo
+        }.map {
+            it.toQuestion()
+        }
+        return QuestionsResponse(size = questions.size, questions)
     }
 
     fun getRandomQuestions(count: Int = 10): QuestionsResponse {
         var questionCount = 0
-        return transaction {
-            val query = UzmanOgretmenlikTable.selectAll().map {
-                it.toQuestion()
-            }
-            val results = query.shuffled().take(count).map {
-                questionCount ++
-                it.copy(questionNo = questionCount)
-            }
-            QuestionsResponse(size = results.size, results)
+        val randomQuestions = mixedList().map {
+            it.toQuestion()
+        }.shuffled().take(count).map {
+            questionCount ++
+            it.copy(questionNo = questionCount)
         }
+        return QuestionsResponse(size = randomQuestions.size, randomQuestions)
     }
 }

@@ -12,7 +12,7 @@ fun Application.configureRouting() {
         get {
             call.respondText("Welcome to exam questions server!")
         }
-        route("/uzman_ogretmenlik"){
+        route("/uzman_ogretmenlik") {
             uzmanOgretmenlikRouting()
         }
     }

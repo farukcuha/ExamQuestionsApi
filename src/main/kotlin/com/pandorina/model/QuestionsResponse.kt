@@ -1,8 +1,5 @@
 package com.pandorina.model
 
-import com.pandorina.uzman_ogretmenlik.UzmanOgretmenlikTable
-import org.jetbrains.exposed.sql.ResultRow
-
 @kotlinx.serialization.Serializable
 data class QuestionsResponse(
     val size: Int?,
@@ -22,16 +19,16 @@ data class QuestionsResponse(
     )
 }
 
-fun ResultRow.toQuestion(): QuestionsResponse.Question {
+fun QuestionSourceModel.toQuestion(): QuestionsResponse.Question {
 
     return QuestionsResponse.Question(
-        questionNo = this[UzmanOgretmenlikTable.questionNo],
-        questionText = this[UzmanOgretmenlikTable.questionText],
-        answer0 = this[UzmanOgretmenlikTable.answer0],
-        answer1 = this[UzmanOgretmenlikTable.answer1],
-        answer2 = this[UzmanOgretmenlikTable.answer2],
-        answer3 = this[UzmanOgretmenlikTable.answer3],
-        answer4 = this[UzmanOgretmenlikTable.answer4],
-        correctAnswer = this[UzmanOgretmenlikTable.correctAnswer],
+        questionNo = question_no,
+        questionText = question_text,
+        answer0 = answer_0,
+        answer1 = answer_1,
+        answer2 = answer_2,
+        answer3 = answer_3,
+        answer4 = answer_4,
+        correctAnswer = correct_answer
     )
 }

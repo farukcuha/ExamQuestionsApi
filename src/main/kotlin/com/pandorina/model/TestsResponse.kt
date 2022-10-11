@@ -1,8 +1,5 @@
 package com.pandorina.model
 
-import com.pandorina.uzman_ogretmenlik.UzmanOgretmenlikTable
-import org.jetbrains.exposed.sql.ResultRow
-
 @kotlinx.serialization.Serializable
 data class TestsResponse(
     val size: Int?,
@@ -15,10 +12,10 @@ data class TestsResponse(
     )
 }
 
-fun ResultRow.toTestResponse(): TestsResponse.Test {
+fun QuestionSourceModel.toTestResponse(): TestsResponse.Test {
 
     return TestsResponse.Test(
-        testTitle = this[UzmanOgretmenlikTable.title],
-        testNo = this[UzmanOgretmenlikTable.testNo]
+        testTitle = title,
+        testNo = test_no
     )
 }
