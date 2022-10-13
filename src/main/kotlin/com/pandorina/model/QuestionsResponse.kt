@@ -10,25 +10,23 @@ data class QuestionsResponse(
     data class Question(
         val questionNo: Int?,
         val questionText: String?,
-        val answer0: String?,
-        val answer1: String?,
-        val answer2: String?,
-        val answer3: String?,
-        val answer4: String?,
+        val answers: List<String>?,
         val correctAnswer: Int?
     )
 }
 
 fun QuestionSourceModel.toQuestion(): QuestionsResponse.Question {
+    val answers = mutableListOf<String>()
+    answers.add(answer_0)
+    answers.add(answer_1)
+    answers.add(answer_2)
+    answers.add(answer_3)
+    if (answer_4.isNotBlank()) answers.add(answer_4)
 
     return QuestionsResponse.Question(
         questionNo = question_no,
         questionText = question_text,
-        answer0 = answer_0,
-        answer1 = answer_1,
-        answer2 = answer_2,
-        answer3 = answer_3,
-        answer4 = answer_4,
+        answers.toList(),
         correctAnswer = correct_answer
     )
 }
