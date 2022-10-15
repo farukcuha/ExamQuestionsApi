@@ -9,7 +9,7 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 
 fun main() {
-    embeddedServer(Netty, port = 5000, host = "0.0.0.0") {
+    embeddedServer(Netty, port = System.getenv("PORT").toInt()) {
         configureSerialization()
         configureRouting()
     }.start(wait = true)
