@@ -49,6 +49,6 @@ fun Route.uzmanOgretmenlikRouting() {
     }
 
     get("exam_time") {
-        call.respond(1668841200000)
+        call.respond(1668852000000)
     }
 }
