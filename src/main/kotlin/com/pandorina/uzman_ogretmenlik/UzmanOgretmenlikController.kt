@@ -8,20 +8,29 @@ import java.io.InputStreamReader
 object UzmanOgretmenlikController {
 
     private val questionList = BufferedReader(
-        InputStreamReader(javaClass.getResourceAsStream("/uzman-ogretmenlik-sorular.json"))).readText().run {
-        Gson().fromJson(this, Array<QuestionSourceModel>::class.java).asList()
+        InputStreamReader(javaClass.getResourceAsStream("/uzman-ogretmenlik-sorular.json"))
+    ).readText().run {
+        Gson().fromJson(this, Array<QuestionSourceModel>::class.java).asList().distinctBy {
+            it.question_text
+        }
     }
 
     private val trialExamList = BufferedReader(
-        InputStreamReader(javaClass.getResourceAsStream("/uzman-ogretmenlik-deneme-sinavlari.json"))).readText().run {
-        Gson().fromJson(this, Array<QuestionSourceModel>::class.java).asList()
+        InputStreamReader(javaClass.getResourceAsStream("/uzman-ogretmenlik-deneme-sinavlari.json"))
+    ).readText().run {
+        Gson().fromJson(this, Array<QuestionSourceModel>::class.java).asList().distinctBy {
+            it.question_text
+        }
     }
 
-    private fun mixedList(): List<QuestionSourceModel> {
+    fun mixedList(): List<QuestionSourceModel> {
         return mutableListOf<QuestionSourceModel>().apply {
             addAll(questionList)
             addAll(trialExamList)
             shuffled()
+            filter {
+                it.answer_0.isNotEmpty()
+            }
         }
     }
 
@@ -34,17 +43,29 @@ object UzmanOgretmenlikController {
     }
 
     fun getTests(title: String): TestsResponse {
-        val questions = questionList.filter {
-            it.title == title
-        }.map {
-            it.toTestResponse()
-        }.distinct()
-        return TestsResponse(size = questions.size, questions)
+        val prList = mutableListOf<TestsResponse.Test>()
+        questionList.filter {
+            it.title == title && it.answer_0.isNotEmpty()
+        }.apply {
+            distinctBy {
+                it.test_no
+            }.forEach { filtered ->
+                val asd = filter {
+                    filtered.test_no == it.test_no
+                }
+                if (asd.size >= 5) prList.addAll(
+                    asd.map {
+                        it.toTestResponse()
+                    }.distinct()
+                )
+            }
+        }
+        return TestsResponse(size = prList.size, prList)
     }
 
     fun getQuestions(title: String, testNo: Int): QuestionsResponse {
         val questions = questionList.filter {
-            it.title == title && it.test_no == testNo
+            it.title == title && it.test_no == testNo && it.answer_0.isNotEmpty()
         }.map {
             it.toQuestion()
         }
@@ -72,7 +93,7 @@ object UzmanOgretmenlikController {
         val randomQuestions = mixedList().map {
             it.toQuestion()
         }.shuffled().take(count).map {
-            questionCount ++
+            questionCount++
             it.copy(questionNo = questionCount)
         }
         return QuestionsResponse(size = randomQuestions.size, randomQuestions)
