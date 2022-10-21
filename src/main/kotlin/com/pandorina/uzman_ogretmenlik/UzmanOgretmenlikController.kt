@@ -81,7 +81,7 @@ object UzmanOgretmenlikController {
 
     fun getTrialExamQuestions(testNo: Int): QuestionsResponse {
         val questions = trialExamList.filter {
-            it.test_no == testNo
+            it.test_no == testNo && it.answer_0.isNotEmpty()
         }.map {
             it.toQuestion()
         }
